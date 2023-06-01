@@ -1,0 +1,3 @@
+conda activate yolov8
+
+python main.py
