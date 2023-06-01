@@ -11,18 +11,6 @@ from datetime import datetime
 import numpy as np
 from multiprocessing import cpu_count, freeze_support
 
-# def start_server(host="0.0.0.0",
-#                  port=8083,
-#                  num_workers=4,
-#                  loop="asyncio",
-#                  reload=False):
-#     uvicorn.run("main:app",
-#                 host=host,
-#                 port=port,
-#                 workers=num_workers,
-#                 loop=loop,
-#                 reload=reload)
-
 LOCAL_WORKSPACE_PATH = '.'
 
 paths = {
@@ -57,6 +45,11 @@ def load_image_into_numpy_array(data):
     npimg = np.frombuffer(data, np.uint8)
     frame = cv2.imdecode(npimg, cv2.IMREAD_COLOR)
     return cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+
+
+@app.get("/api/v1.0/check-status")
+async def root():
+    return {"Alive": True}
 
 
 @app.post("/jkfenner/spring/detect/image")
@@ -112,8 +105,3 @@ async def detect_object_json(file: UploadFile = File(...)):
             "not_ok_count": not_ok_count,
             "ok_count" : ok_count, 
             "b64": im_b64}
-
-# if __name__ == '__main__':
-#     freeze_support()
-#     num_workers = int(cpu_count() * 0.75)
-#     start_server(num_workers=num_workers)
