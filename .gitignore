@@ -143,7 +143,6 @@ weights/
 *.weights
 *.pt
 *.pb
-*.onnx
 *.engine
 *.mlmodel
 *.torchscript
